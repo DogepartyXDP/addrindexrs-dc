@@ -1,0 +1,79 @@
+[general]
+env_prefix = "ADDRINDEXRS"
+conf_file_param = "conf"
+conf_dir_param = "conf_dir"
+doc = """
+An efficient addresses indexer based on Electrs.
+"""
+
+[[switch]]
+name = "verbose"
+abbr = "v"
+doc = "Increase logging verbosity"
+count = true
+
+[[switch]]
+name = "timestamp"
+doc = "Prepend log lines with a timestamp"
+
+[[param]]
+name = "db_dir"
+type = "std::path::PathBuf"
+doc = "Directory to store index database (default: ./db/)"
+default = "\"./db\".into()"
+
+[[param]]
+name = "daemon_dir"
+type = "std::path::PathBuf"
+doc = "Data directory of Bitcoind (default: ~/.bitcoin/)"
+default = "crate::config::default_daemon_dir()"
+
+[[param]]
+name = "cookie"
+type = "String"
+doc = "JSONRPC authentication cookie ('USER:PASSWORD', default: read from ~/.bitcoin/.cookie)"
+
+[[param]]
+name = "network"
+type = "crate::config::BitcoinNetwork"
+convert_into = "::bitcoin::network::constants::Network"
+doc = "Select Bitcoin network type ('mainnet', 'testnet' or 'regtest')"
+default = "Default::default()"
+
+[[param]]
+name = "indexer_rpc_addr"
+type = "crate::config::ResolvAddr"
+doc = "Indexer JSONRPC 'addr:port' to listen on (default: '127.0.0.1:50001' for mainnet, '127.0.0.1:60001' for testnet and '127.0.0.1:60401' for regtest)"
+
+[[param]]
+name = "daemon_rpc_addr"
+type = "crate::config::ResolvAddr"
+doc = "Bitcoin daemon JSONRPC 'addr:port' to connect (default: 127.0.0.1:8332 for mainnet, 127.0.0.1:18332 for testnet and 127.0.0.1:18443 for regtest)"
+
+[[switch]]
+name = "jsonrpc_import"
+doc = "Use JSONRPC instead of directly importing blk*.dat files. Useful for remote full node or low memory system"
+
+[[param]]
+name = "index_batch_size"
+type = "usize"
+doc = "Number of blocks to get in one JSONRPC request from bitcoind"
+default = "100"
+
+[[param]]
+name = "bulk_index_threads"
+type = "usize"
+doc = "Number of threads used for bulk indexing (default: use the # of CPUs)"
+default = "0"
+
+[[param]]
+name = "blocktxids_cache_size_mb"
+type = "f32"
+doc = "Total size of block transactions IDs to cache (in MB)"
+default = "10.0"
+
+[[param]]
+name = "txid_limit"
+type = "usize"
+doc = "Number of transactions to lookup before returning an error, to prevent 'too popular' addresses from causing the RPC server to get stuck (0 - disable the limit)"
+default = "100"

@@ -1,0 +1,18 @@
+[Unit]
+Description=addrindexrs rust server
+
+[Service]
+Type=simple
+ExecStart=/path/to/addrindexrs/target/release/addrindexrs -vvvv --db-dir /path/to/addrindexrs/db/
+Restart=on-failure
+RestartSec=60
+Environment="RUST_BACKTRACE=1"
+
+# Hardening measures
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target
