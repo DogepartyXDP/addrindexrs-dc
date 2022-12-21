@@ -24,11 +24,11 @@ $ cargo build --release
 Allow Bitcoin daemon to sync before starting the indexer. The indexer requires that bitcoin daemon isn't pruned and maintains a txindex.
 
 ```bash
-$ bitcoind -server=1 -txindex=1 -prune=0
+$ dogecoind -server=1 -txindex=1 -prune=0
 ```
 
 If you are using `-rpcuser=USER` and `-rpcpassword=PASSWORD` for authentication, please use `cookie="USER:PASSWORD"` option in one of the config files.
-Otherwise, [`~/.bitcoin/.cookie`](https://github.com/bitcoin/bitcoin/blob/0212187fc624ea4a02fc99bc57ebd413499a9ee1/contrib/debian/examples/bitcoin.conf#L70-L72) will be read, allowing this server to use bitcoind JSONRPC interface.
+Otherwise, [`~/.bitcoin/.cookie`](https://github.com/bitcoin/bitcoin/blob/0212187fc624ea4a02fc99bc57ebd413499a9ee1/contrib/debian/examples/bitcoin.conf#L70-L72) will be read, allowing this server to use dogecoind JSONRPC interface.
 
 ## Usage
 
@@ -151,12 +151,12 @@ For more details, see http://docs.electrum.org/en/latest/tor.html.
 
 ### Sample Systemd Unit File
 
-You may wish to have systemd manage addrindexrs so that it's "always on." Here is a sample unit file (which assumes that the bitcoind unit file is `bitcoind.service`):
+You may wish to have systemd manage addrindexrs so that it's "always on." Here is a sample unit file (which assumes that the dogecoind unit file is `dogecoind.service`):
 
 ```
 [Unit]
 Description=addrindexrs
-After=bitcoind.service
+After=dogecoind.service
 
 [Service]
 WorkingDirectory=/home/bitcoin/addrindexrs
