@@ -320,7 +320,7 @@ impl Daemon {
         info!("{:?}", network_info);
         if network_info.version < 16_00_00 {
             bail!(
-                "{} is not supported - please use bitcoind 0.16+",
+                "{} is not supported - please use dogecoind 0.16+",
                 network_info.subversion,
             )
         }
@@ -328,14 +328,14 @@ impl Daemon {
         let blockchain_info = daemon.getblockchaininfo()?;
         info!("{:?}", blockchain_info);
         if blockchain_info.pruned {
-            bail!("pruned node is not supported (use '-prune=0' bitcoind flag)".to_owned())
+            bail!("pruned node is not supported (use '-prune=0' dogecoind flag)".to_owned())
         }
 
         loop {
             if !daemon.getblockchaininfo()?.initialblockdownload {
                 break;
             }
-            warn!("wait until bitcoind is synced (i.e. initialblockdownload = false)");
+            warn!("wait until dogecoind is synced (i.e. initialblockdownload = false)");
             signal.wait(Duration::from_secs(10))?;
         }
         Ok(daemon)
@@ -399,7 +399,7 @@ impl Daemon {
         loop {
             match self.handle_request_batch(method, params_list) {
                 Err(Error(ErrorKind::Connection(msg), _)) => {
-                    warn!("reconnecting to bitcoind: {}", msg);
+                    warn!("reconnecting to dogecoind: {}", msg);
                     self.signal.wait(Duration::from_secs(3))?;
                     let mut conn = self.conn.lock().unwrap();
                     *conn = conn.reconnect()?;
@@ -420,7 +420,7 @@ impl Daemon {
         self.retry_request_batch(method, params_list)
     }
 
-    // bitcoind JSONRPC API:
+    // dogecoind JSONRPC API:
 
     fn getblockchaininfo(&self) -> Result<BlockchainInfo> {
         let info: Value = self.request("getblockchaininfo", json!([]))?;
