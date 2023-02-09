@@ -552,9 +552,6 @@ impl Daemon {
             .collect();
 
 
-		for x in &params_list {
-			println!("Proxima tx {}", x);
-		}
         let values = self.requests("getrawtransaction", &params_list)?;
         let mut txs = vec![];
         for value in values {
