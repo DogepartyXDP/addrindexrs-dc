@@ -1,6 +1,6 @@
 [package]
 name = "addrindexrs"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["Roman Zeyde <me@romanzey.de>", "kenshin-samourai <kenshin_samourai@tutanota.com>"]
 description = "An efficient address indexer in Rust"
 license = "MIT"
@@ -49,7 +49,7 @@ time = "0.1"
 tiny_http = "0.6"
 
 [build-dependencies]
-configure_me_codegen = "0.3.12"
+configure_me_codegen = "0.4.0"
 
 [patch.crates-io]
 bitcoin = { path = "./rust-bitcoin-0.21.1", features = ["user-serde"] }
